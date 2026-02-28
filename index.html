@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Am Sorry</title>
+  <style>
+    :root {
+      --ink: #311527;
+      --soft-ink: #6d3d57;
+      --rose: #d6336c;
+      --rose-dark: #a61e4d;
+      --petal: #ffeff6;
+      --card: rgba(255, 255, 255, 0.84);
+      --line: rgba(214, 51, 108, 0.2);
+      --ok: #248f66;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Palatino Linotype", "Book Antiqua", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 12%, #ffd9e8 0%, transparent 32%),
+        radial-gradient(circle at 88% 10%, #ffd5c7 0%, transparent 26%),
+        radial-gradient(circle at 50% 90%, #ffe8b6 0%, transparent 34%),
+        linear-gradient(130deg, #fff3f8, #ffeef3 45%, #ffeff8);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      position: relative;
+    }
+
+    .paper {
+      width: min(760px, 100%);
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: 0 30px 80px rgba(166, 30, 77, 0.2);
+      backdrop-filter: blur(9px);
+      overflow: hidden;
+      position: relative;
+      animation: rise 700ms ease-out both;
+    }
+
+    .paper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0 0, rgba(214, 51, 108, 0.08), transparent 38%),
+        radial-gradient(circle at 100% 0, rgba(255, 153, 116, 0.12), transparent 36%),
+        linear-gradient(to bottom, transparent, rgba(214, 51, 108, 0.05));
+      pointer-events: none;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: clamp(22px, 5vw, 42px);
+      display: grid;
+      gap: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.1rem, 5.2vw, 3.3rem);
+      line-height: 1.1;
+      color: var(--rose-dark);
+      text-shadow: 0 0 20px rgba(214, 51, 108, 0.15);
+      font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+    }
+
+    .dear {
+      margin: 0;
+      font-size: clamp(1rem, 2.6vw, 1.2rem);
+      color: var(--soft-ink);
+    }
+
+    .tagline {
+      margin: -2px 0 2px;
+      color: var(--rose-dark);
+      font-size: clamp(1rem, 2.8vw, 1.2rem);
+      font-weight: 700;
+    }
+
+    .line {
+      margin: 0;
+      font-size: clamp(1.05rem, 2.6vw, 1.2rem);
+      line-height: 1.75;
+    }
+
+    .highlight {
+      color: var(--rose-dark);
+      font-weight: 700;
+    }
+
+    .promise-box {
+      margin-top: 4px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--petal);
+      padding: 14px 16px;
+      font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+      color: var(--soft-ink);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 170ms ease, box-shadow 170ms ease, background-color 170ms ease;
+      font-family: inherit;
+    }
+
+    .forgive {
+      background: linear-gradient(135deg, var(--rose), #ff5f94);
+      color: #fff;
+      box-shadow: 0 11px 26px rgba(214, 51, 108, 0.35);
+    }
+
+    .forgive:hover {
+      transform: translateY(-1px);
+      background: var(--rose-dark);
+    }
+
+    .forgive:active {
+      transform: translateY(0);
+    }
+
+    .restart {
+      background: #fff3f8;
+      color: var(--ink);
+      border: 1px solid rgba(109, 61, 87, 0.26);
+    }
+
+    .restart:hover {
+      transform: translateY(-1px);
+      background: #f3e7dc;
+    }
+
+    .reply {
+      min-height: 28px;
+      margin: 4px 0 0;
+      color: var(--ok);
+      font-size: clamp(1rem, 2.4vw, 1.1rem);
+      font-weight: 700;
+    }
+
+    .signature {
+      margin-top: 4px;
+      font-size: 1rem;
+      color: var(--soft-ink);
+    }
+
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -24px;
+      color: var(--rose);
+      opacity: 0.9;
+      animation: float-up linear forwards;
+      filter: drop-shadow(0 6px 8px rgba(142, 43, 34, 0.2));
+    }
+
+    .apology-bubbles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .apology-emoji {
+      position: absolute;
+      bottom: -40px;
+      opacity: 0.7;
+      animation: bubble-up linear forwards;
+      filter: drop-shadow(0 4px 7px rgba(166, 30, 77, 0.2));
+    }
+
+    @keyframes float-up {
+      to {
+        transform: translateY(-110vh) rotate(12deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes bubble-up {
+      to {
+        transform: translateY(-118vh) rotate(8deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .actions {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="apology-bubbles" id="apologyBubbles"></div>
+  <main class="paper">
+    <section class="content">
+      <h1>I'm Sorry, Palak ❤</h1>
+      <p class="dear">Palak,</p>
+      <p class="tagline">I mean every word here, from my heart.</p>
+
+      <p class="line">
+        I'm truly sorry for breaking up with you. It was a mistake, and I hurt you.
+        <span class="highlight">I take full responsibility</span> for that.
+      </p>
+      <p class="line">
+        You mean so much to me, and I did not realize how much until I felt your absence.
+        I miss you, I value you, and I still care about you deeply.
+      </p>
+
+      <div class="promise-box">
+        I am not asking for anything except a chance to say I am sorry from my heart.
+      </div>
+
+      <div class="actions">
+        <button class="forgive" id="forgiveBtn">Can You Forgive Me?</button>
+        <button class="restart" id="restartBtn" type="button">Read Again</button>
+      </div>
+
+      <p class="reply" id="reply"></p>
+      <p class="signature">Always yours ❤</p>
+    </section>
+  </main>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    const forgiveBtn = document.getElementById("forgiveBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const reply = document.getElementById("reply");
+    const hearts = document.getElementById("hearts");
+    const apologyBubbles = document.getElementById("apologyBubbles");
+    const apologyEmojis = ["🥺", "💔", "🙏", "😔", "❤️"];
+
+    function spawnHearts(count) {
+      for (let i = 0; i < count; i += 1) {
+        const heart = document.createElement("span");
+        heart.className = "heart";
+        heart.textContent = "❤";
+        heart.style.left = `${Math.random() * 100}vw`;
+        heart.style.fontSize = `${16 + Math.random() * 26}px`;
+        heart.style.animationDuration = `${3.5 + Math.random() * 3}s`;
+        heart.style.animationDelay = `${Math.random() * 0.4}s`;
+        hearts.appendChild(heart);
+        setTimeout(() => heart.remove(), 7000);
+      }
+    }
+
+    function spawnApologyEmoji() {
+      const emoji = document.createElement("span");
+      emoji.className = "apology-emoji";
+      emoji.textContent = apologyEmojis[Math.floor(Math.random() * apologyEmojis.length)];
+      emoji.style.left = `${Math.random() * 100}vw`;
+      emoji.style.fontSize = `${18 + Math.random() * 18}px`;
+      emoji.style.animationDuration = `${5 + Math.random() * 4}s`;
+      apologyBubbles.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 9000);
+    }
+
+    forgiveBtn.addEventListener("click", () => {
+      reply.textContent = "Thank you for giving me a chance.";
+      spawnHearts(22);
+      setTimeout(() => {
+        window.location.href = "./thankyou.html";
+      }, 900);
+    });
+
+    restartBtn.addEventListener("click", () => {
+      reply.textContent = "";
+    });
+
+    setInterval(spawnApologyEmoji, 700);
+  </script>
+</body>
+</html>
